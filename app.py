@@ -52,7 +52,7 @@ def process_url(url):
         return ""
     try:
         response = requests.get(url)
-        return response.text
+        return response.text()
     except:
         st.error("Failed to fetch content from URL")
         return ""
@@ -78,12 +78,15 @@ def analyze_conversation(model, transcript, assistant_prompt, user_input, additi
     return response.text
 
 def main():
-    st.title("Sales Call Analysis Dashboard")
+    st.set_page_config(
+        page_title="Sales Call Analysis Dashboard",
+        page_icon="📞",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
     
-    # models = list_models()
-    # for model in models:
-    #     st.write(model.name)
-
+    st.markdown("# 📞 Sales Call Analysis Dashboard")
+    
     # Initialize Gemini
     model = init_gemini()
     if not model:
@@ -92,51 +95,49 @@ def main():
     # Load data
     transcript, assistant_prompt = load_data()
     
-    # Sidebar for user input
-    st.sidebar.header("Analysis Parameters")
-    user_input = st.sidebar.text_area(
-        "What would you like to analyze about this call?",
-        "Analyze the key moments and success factors in this sales call."
-    )
+    # Sidebar
+    with st.sidebar:
+        st.markdown("### 🎯 Analysis Parameters")
+        user_input = st.text_area(
+            "What would you like to analyze?",
+            "Analyze and list all the improvements in this sales call.",
+            help="Enter your specific analysis request here"
+        )
+        
+        st.markdown("### 📄 Additional Context")
+        uploaded_file = st.file_uploader(
+            "Upload document",
+            type=["txt", "pdf"],
+            help="Upload additional context documents"
+        )
+        url_input = st.text_input(
+            "Or enter a URL",
+            help="Provide a URL for additional context"
+        )
     
-    uploaded_file = st.sidebar.file_uploader("Upload additional document for context", type=["txt", "pdf"])
-    url_input = st.sidebar.text_input("Or enter a URL for additional context")
-    
-    # Process additional context
     additional_context = ""
     if uploaded_file:
         additional_context = process_uploaded_file(uploaded_file)
     elif url_input:
         additional_context = process_url(url_input)
     
-    # Main content
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.subheader("Call Transcript")
-        st.text_area("Transcript", transcript, height=400, disabled=True)
-    
-    with col2:
-        st.subheader("Assistant Prompt")
-        st.text_area("Prompt", assistant_prompt, height=400, disabled=True)
-    
-    # Analysis button
-    if st.button("Analyze Call"):
-        with st.spinner("Analyzing conversation..."):
+    if st.button("🔍 Analyze Call", use_container_width=True, type="primary"):
+        with st.spinner("🔄 Analyzing conversation..."):
             analysis = analyze_conversation(model, transcript, assistant_prompt, user_input, additional_context)
             
-            st.subheader("Analysis Results")
+            st.success("Analysis Complete!")
+            st.markdown("### 🎯 Analysis Results")
             st.write(analysis)
 
+    # Main content with tabs
+    tab1, tab2 = st.tabs(["📝 Transcript", "🤖 Assistant Prompt"])
+    
+    with tab1:
+        st.text_area("Call Transcript", transcript, height=400, disabled=True)
+    
+    with tab2:
+        st.text_area("AI Assistant Prompt", assistant_prompt, height=400, disabled=True)
+    
+
 if __name__ == "__main__":
-    st.set_page_config(
-        page_title="Sales Call Assistant App",
-        page_icon="🧊",
-        layout="wide",
-        initial_sidebar_state="expanded",
-        menu_items={
-            'Get Help': 'https://www.extremelycoolapp.com/help',
-            'About': "# This is a header. This is an *extremely* cool app!"
-        }
-    )
     main()
