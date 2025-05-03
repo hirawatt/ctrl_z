@@ -3,6 +3,9 @@ from google.generativeai import GenerativeModel, list_models
 import google.generativeai as genai
 from pathlib import Path
 import toml
+import requests
+import PyPDF2
+import io
 
 # Load configuration
 def load_secrets():
@@ -31,7 +34,30 @@ def load_data():
     assistant_prompt = assistant_prompt_path.read_text() if assistant_prompt_path.exists() else ""
     return transcript, assistant_prompt
 
-def analyze_conversation(model, transcript, assistant_prompt, user_input):
+def process_uploaded_file(uploaded_file):
+    if uploaded_file is None:
+        return ""
+    
+    if uploaded_file.type == "application/pdf":
+        pdf_reader = PyPDF2.PdfReader(io.BytesIO(uploaded_file.getvalue()))
+        text = ""
+        for page in pdf_reader.pages:
+            text += page.extract_text() + "\n"
+        return text
+    else:
+        return uploaded_file.getvalue().decode("utf-8")
+
+def process_url(url):
+    if not url:
+        return ""
+    try:
+        response = requests.get(url)
+        return response.text
+    except:
+        st.error("Failed to fetch content from URL")
+        return ""
+
+def analyze_conversation(model, transcript, assistant_prompt, user_input, additional_context=""):
     prompt = f"""
     Assistant Prompt:
     {assistant_prompt}
@@ -39,10 +65,13 @@ def analyze_conversation(model, transcript, assistant_prompt, user_input):
     Conversation Transcript:
     {transcript}
     
+    Additional Context:
+    {additional_context}
+    
     User Context/Question:
     {user_input}
     
-    Please analyze this sales call and provide insights based on the user's question.
+    Please analyze this sales call and provide insights based on the user's question and additional context provided.
     """
     
     response = model.generate_content(prompt)
@@ -70,6 +99,16 @@ def main():
         "Analyze the key moments and success factors in this sales call."
     )
     
+    uploaded_file = st.sidebar.file_uploader("Upload additional document for context", type=["txt", "pdf"])
+    url_input = st.sidebar.text_input("Or enter a URL for additional context")
+    
+    # Process additional context
+    additional_context = ""
+    if uploaded_file:
+        additional_context = process_uploaded_file(uploaded_file)
+    elif url_input:
+        additional_context = process_url(url_input)
+    
     # Main content
     col1, col2 = st.columns([2, 1])
     
@@ -84,7 +123,7 @@ def main():
     # Analysis button
     if st.button("Analyze Call"):
         with st.spinner("Analyzing conversation..."):
-            analysis = analyze_conversation(model, transcript, assistant_prompt, user_input)
+            analysis = analyze_conversation(model, transcript, assistant_prompt, user_input, additional_context)
             
             st.subheader("Analysis Results")
             st.write(analysis)
