@@ -1,0 +1,5 @@
+.env
+__pycache__
+ctrl_z/
+tests/
+secrets.toml

@@ -1,0 +1,54 @@
+(Call opens)
+Sarah: Good morning! Is this Mr. Henderson?
+
+Mr. Henderson: Yes, speaking.
+
+Sarah: Hi Mr. Henderson, my name is Sarah, and I'm calling from ConnectQuick Internet. How are you doing today?
+
+Mr. Henderson: I'm alright, busy though. What's this regarding?
+
+Sarah: I understand completely, I'll be brief. I'm calling because we're currently offering a fantastic new high-speed internet package in your area that provides significantly faster speeds and more reliable service than many existing providers, and I wanted to see if it might be a good fit for your needs.
+
+Mr. Henderson: We already have internet. It's... fine.
+
+Sarah: I understand you have a current provider, and "fine" is good, but imagine having internet that's more than just fine. Our new FibreBlast package offers speeds up to 500 Mbps – that's fast enough for seamless streaming on multiple devices, quick downloads, and smooth online gaming, all at a very competitive price. Are you currently experiencing any buffering or slowdowns, especially during peak hours or when multiple people are online?
+
+Mr. Henderson: Well, sometimes it can be a bit sluggish in the evenings, especially when the kids are home and everyone's on their tablets.
+
+Sarah: That's exactly what many of our new customers were experiencing before switching. The FibreBlast package is designed to handle multiple connected devices with ease, ensuring everyone in your household has a smooth online experience, no matter what they're doing. Plus, we're offering a special introductory rate right now that's likely lower than what you're currently paying for potentially slower service.
+
+Mr. Henderson: Lower than what I'm paying now, you say? How much is it? And are there any hidden fees?
+
+Sarah: That's a great question, Mr. Henderson. The introductory rate for the FibreBlast package is just $60 a month for the first 12 months. That's a flat rate, and I can assure you there are no hidden fees. The price includes the modem rental and professional installation. After the first 12 months, the price goes to our standard rate of $75 a month, which is still very competitive for the speeds you receive.
+
+Mr. Henderson: $60 for the first year... that sounds... interesting. But what about installation? Is it a hassle?
+
+Sarah: Not at all! We make the installation process as smooth as possible. Once you decide to switch, we'll schedule a certified technician to come to your home at your convenience. They'll handle everything from setting up the modem to ensuring all your devices are connected. It typically takes about an hour and we aim to minimize any disruption.
+
+Mr. Henderson: And what if I'm not happy with it? Am I locked into a long contract?
+
+Sarah: We're confident you'll love the speed and reliability of ConnectQuick, but we understand the need for flexibility. Our standard agreement is a 12-month term to get the introductory rate. However, we also offer a 30-day satisfaction guarantee. If, for any reason, you're not completely happy within the first 30 days, you can cancel your service, and we'll refund your service fee.
+
+Mr. Henderson: A 30-day guarantee... okay, that makes me feel a bit better. My current contract is almost up anyway. How would I go about switching?
+
+Sarah: It's a very simple process, Mr. Henderson. I can actually help you get started right now over the phone. I would just need to confirm your address to ensure eligibility and then we can walk through the sign-up and scheduling for installation. It only takes a few minutes.
+
+Mr. Henderson: Hmm. Can you send me some information first? I'd like to see the details in writing.
+
+Sarah: Absolutely, I can do that. I can email you a summary of the FibreBlast package, including the pricing, speeds, and the terms of service. What's the best email address for you?
+
+Mr. Henderson: It's [email protected]
+
+Sarah: Perfect. I'll send that over to you right away. I'd also be happy to answer any other questions you might have after reviewing the information. Would it be alright if I give you a quick call back in a couple of days to see if you received everything and if you have any further questions?
+
+Mr. Henderson: Yes, that would be fine. Let's say Tuesday around this time?
+
+Sarah: Tuesday around this time, got it. I'll make a note of that, Mr. Henderson. Thank you for your time today, I appreciate it. I'll get that email sent out to you shortly.
+
+Mr. Henderson: All right, thank you.
+
+Sarah: Thank you, Mr. Henderson. Have a great day!
+
+Mr. Henderson: You too.
+
+(Call ends)

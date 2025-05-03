@@ -1,0 +1,6 @@
+deepgram_sdk==3.11.0
+numpy==2.2.5
+protobuf==6.30.2
+streamlit==1.45.0
+toml==0.10.2
+google-generativeai
