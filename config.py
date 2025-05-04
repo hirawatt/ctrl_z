@@ -1,0 +1,19 @@
+# Audio configuration
+MODEL_SIZE = "base"
+SAMPLE_RATE = 16000
+CHUNK_SIZE = 1024
+CHANNELS = 1
+
+# Threading settings
+THREAD_JOIN_TIMEOUT = 2.0
+EVENT_WAIT_TIME = 0.1
+
+# Transcription settings
+MIN_AUDIO_LENGTH = 0.5
+KEEP_DURATION = 0.5
+NOISE_GATE_THRESHOLD = 10
+VAD_MIN_SILENCE_DURATION = 500
+
+# Device settings
+AUDIO_DEVICE = "cpu"
+COMPUTE_TYPE = "int8"
