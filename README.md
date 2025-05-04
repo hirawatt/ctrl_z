@@ -1,77 +1,93 @@
-# Deepgram Live Audio Transcription App
+# CTRL_Z: Real-Time Assistant for Sales Agents
 
-This Streamlit application uses Deepgram's API to transcribe audio in real-time. It captures audio from your microphone, sends it to Deepgram's streaming API, and displays the transcription results instantly.
+An AI-powered platform designed to improve sales conversion rates through real-time call analysis and feedback.
 
-## Features
+## Main App Features
+- Live Conversation Audio Transcript using Google Speech-to-Text
+- Real-time AI Agent Call Analysis using Gemini AI
+- Document/URL Context Integration
+- Pre-loaded Transcript Analysis
+- Custom Analysis Prompts
 
-- Real-time audio transcription
-- Support for multiple languages
-- Configurable audio settings
-- Smart formatting option
-- Choice of Deepgram AI models
-- Complete transcript history
+### Primary Sectors
+- Insurance
+- Loans
+- Investments
+- Education Products/Courses
 
-## Setup Instructions
+### Call Categories
+1. New Leads (Cold Calls)
+2. Warm Leads
 
-### 1. Install Required Packages
+### Cold Call Checklist
+- [ ] Professional Greeting
+- [ ] Clear Self Introduction
+- [ ] Articulate Reason for Call
+- [ ] Customer Problem Understanding
+- [ ] Value Proposition
+- [ ] Next Steps/Call to Action
 
-```bash
-pip install -r requirements.txt
+## Problem Statement
+Low conversion rates on cold calls due to:
+- Inconsistent call quality
+- Missed opportunities for engagement
+- Lack of real-time feedback
+- Variable agent performance
+
+## Solution
+AI-powered real-time analysis platform that:
+- Provides instant feedback on call performance
+- Identifies improvement areas
+- Suggests better responses
+- Tracks conversation quality metrics
+
+## Technical Architecture
+
+```mermaid
+graph TD
+    A[Agent] -- Uses --> SA(Streamlit Application)
+    C[Customer] -- Speaks --> AS(Audio Source)
+    AS --> AP(Audio Processing Module)
+    AP --> STT(Speech-to-Text Engine)
+    STT --> LD(Language Detection Module)
+    STT --> AE(NLP / Assistant Engine)
+    LD --> TL(Translation Logic)
+    TL --> SA(Sarvam API)
+    SA -- Translated Text --> TL
+    TL --> AE(NLP / Assistant Engine)
+    AE -- Queries --> DS[Data Storage / Knowledge Base]
+    DS -- Provides Data --> AE
+    AE -- Assistant Output --> SA(Streamlit Application)
+    STT -- Transcription --> SA(Streamlit Application)
+    TL -- Translation --> SA(Streamlit Application)
+
+    %% Subgraph for Backend Processing
+    subgraph "Backend Processing"
+        AP
+        STT
+        LD
+        TL
+        AE
+    end
+
+    %% Styling
+    classDef external fill:#f491f5,stroke:#333,stroke-width:2px;
+    class SA,DS,AS,C,A external;
 ```
 
-### 2. Get a Deepgram API Key
+## Setup
+1. Clone the repository
+2. Create a `.streamlit/secrets.toml` file with your GEMINI_API_KEY
+3. Install requirements: `pip install -r requirements.txt`
+4. Run the app: `streamlit run app.py`
 
-Sign up at [console.deepgram.com](https://console.deepgram.com/) to obtain your API key.
+## Features in Development
+- Multi-language support
+- Call sentiment analysis
+- Automated call scoring
+- Performance analytics dashboard
+- Team performance tracking
+- Best practices library
 
-### 3. Run the Application
-
-```bash
-streamlit run app.py
-```
-
-## How to Use
-
-1. Enter your Deepgram API key in the sidebar
-2. Configure your audio and model settings
-3. Click 'Start Recording' to begin transcription
-4. Speak into your microphone
-5. Click 'Stop Recording' when finished
-6. View your transcription history below
-
-## Notes
-
-- PyAudio may require additional system dependencies depending on your operating system:
-  - **Windows**: Should work with pip install
-  - **macOS**: `brew install portaudio` before pip install
-  - **Linux**: `sudo apt-get install python3-pyaudio` or `sudo apt-get install portaudio19-dev` before pip install
-
-- The app requires microphone access in your browser.
-
-## Troubleshooting
-
-If you encounter issues with the audio recording:
-
-1. Make sure your microphone is properly connected and has permission in your browser
-2. Try adjusting the sample rate in the sidebar
-3. Ensure you've installed all dependencies correctly
-
-## Advanced Options
-
-The sidebar provides options to customize:
-
-- **Sample Rate**: Choose between 16kHz, 44.1kHz, and 48kHz
-- **Language**: Select from English, Spanish, French, German, Japanese, Korean, or Chinese
-- **Smart Formatting**: Formats numbers, dates, and other entities more readably
-- **Model**: Choose between Nova-2 (fastest), Nova (balanced), or Enhanced (most accurate)
-- **Interim Results**: Shows partial transcripts as you speak
-
-## How It Works
-
-The application uses:
-
-1. **Streamlit** for the web interface
-2. **PyAudio** to capture audio from your microphone
-3. **Deepgram SDK** to stream audio and receive transcriptions
-4. **Threading** to handle audio processing without blocking the UI
-
-The audio is processed in chunks and sent to Deepgram in real-time, with results displayed as they become available.
+## Contributing
+Contributions are welcome! Please read our contributing guidelines and code of conduct.
