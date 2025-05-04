@@ -25,14 +25,15 @@ def init_gemini():
         return model
     return None
 
-# Load data files
-def load_data():
+# Load transcript
+def load_transcript():
     transcript_path = Path("data/sample_audio_transcription.txt")
+    return transcript_path.read_text() if transcript_path.exists() else ""
+
+# Load assistant prompt
+def load_assistant_prompt():
     assistant_prompt_path = Path("data/assistant_prompt.txt")
-    
-    transcript = transcript_path.read_text() if transcript_path.exists() else ""
-    assistant_prompt = assistant_prompt_path.read_text() if assistant_prompt_path.exists() else ""
-    return transcript, assistant_prompt
+    return assistant_prompt_path.read_text() if assistant_prompt_path.exists() else ""
 
 def process_uploaded_file(uploaded_file):
     if uploaded_file is None:
@@ -92,17 +93,20 @@ def main():
     if not model:
         return
     
-    # Load data
-    transcript, assistant_prompt = load_data()
+    assistant_prompt = load_assistant_prompt()
     
     # Sidebar
     with st.sidebar:
         st.markdown("### 🎯 Analysis Parameters")
+        
         user_input = st.text_area(
             "What would you like to analyze?",
             "Analyze and list all the improvements in this sales call.",
             help="Enter your specific analysis request here"
         )
+        with st.expander("Data connection"):
+            if st.button("Connect with CRM", use_container_width=True):
+                st.info("Work in Progress")
         
         st.markdown("### 📄 Additional Context")
         uploaded_file = st.file_uploader(
@@ -120,22 +124,39 @@ def main():
         additional_context = process_uploaded_file(uploaded_file)
     elif url_input:
         additional_context = process_url(url_input)
-    
-    if st.button("🔍 Analyze Call", use_container_width=True, type="primary"):
-        with st.spinner("🔄 Analyzing conversation..."):
-            analysis = analyze_conversation(model, transcript, assistant_prompt, user_input, additional_context)
-            
-            st.success("Analysis Complete!")
-            st.markdown("### 🎯 Analysis Results")
-            st.write(analysis)
 
-    # Main content with tabs
-    tab1, tab2 = st.tabs(["📝 Transcript", "🤖 Assistant Prompt"])
+    # Create tabs for input methods
+    input_tab1, input_tab2 = st.tabs(["🎙️ Live Recording", "📝 Existing Transcript"])
     
-    with tab1:
+    with input_tab1:
+        audio_value = st.audio_input("Record conversation")
+        if audio_value:
+            st.info("Live Conversation Analysis in process")
+            transcript = audio_value.read()
+            if st.button("🔍 Analyze Live Recording", use_container_width=True, type="primary"):
+                with st.spinner("🔄 Analyzing conversation..."):
+                    analysis = analyze_conversation(model, transcript, assistant_prompt, user_input, additional_context)
+                    st.success("Analysis Complete!")
+                    st.markdown("### 🎯 Analysis Results")
+                    st.write(analysis)
+    
+    with input_tab2:
+        st.info("Using pre-loaded transcripts")
+        transcript = load_transcript()
+        
+        if transcript and st.button("🔍 Analyze Call", use_container_width=True, type="primary"):
+            with st.spinner("🔄 Analyzing conversation..."):
+                analysis = analyze_conversation(model, transcript, assistant_prompt, user_input, additional_context)
+                st.success("Analysis Complete!")
+                st.markdown("### 🎯 Analysis Results")
+                st.write(analysis)
+
+    # Display Tabs
+    
+    with st.expander("📝 Transcript"):
         st.text_area("Call Transcript", transcript, height=400, disabled=True)
     
-    with tab2:
+    with st.expander("🤖 Assistant Prompt"):
         st.text_area("AI Assistant Prompt", assistant_prompt, height=400, disabled=True)
     
 
